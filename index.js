@@ -9,14 +9,10 @@
 
 var util = require("util");
 var EventEmitter = require("events").EventEmitter;
-var serialPort = require('serialport');
+var serialport = require('serialport');
 
-function ArduinoScanner() {
-  var self = this;
-
-  var searchInterval;
-
-  EventEmitter.call(self);
+var ArduinoScanner = function() {
+  EventEmitter.call(this);
 
   /**
    * Searches the serial ports for any device that has a vendor id and product id
@@ -28,10 +24,10 @@ function ArduinoScanner() {
    * i.e.
    * scan.start(500, true)
    */
-  var search = function() {
-    serialPort.list(function(err, ports) {
+  this.search = function() {
+    serialport.list(function(err, ports) {
       if (ports.length === 0) {
-        self.emit('noPortsFound', {
+        this.emit('noPortsFound', {
           message: 'Nothing detected in serial ports. Check connections.'
         });
         return;
@@ -42,22 +38,20 @@ function ArduinoScanner() {
           (port.vendorId == '0x2341' && port.productId === '0x0042'); // Arduino.cc
 
         if (matched) {
-          self.emit('arduinoFound', {
+          this.emit('arduinoFound', {
             port: port.comName,
             message: 'Arduino found at port ' + port.comName + '.'
           });
         } else {
-          if (_verbose) {
-            self.emit('arduinoNotFound', {
-              message: 'Arduino not at port ' + port.comName + '.'
-            });
-          }
+          this.emit('arduinoNotFound', {
+            message: 'Arduino not at port ' + port.comName + '.'
+          });
         }
         return matched;
       });
     });
   };
-}
+};
 
 /**
  * Starts scanning for valid Arduino serial ports.
@@ -66,17 +60,17 @@ function ArduinoScanner() {
  */
 ArduinoScanner.prototype.start = function(interval) {
   // If the interval isn't set, default to 500 ms.
-  interval = typeof interval !== 'undefined' ? interval : 500;
+  interval = interval || 500;
 
-  searchInterval = setInterval(search, interval);
+  this.searchInterval = setInterval(search, interval);
 };
 
 /**
  * Stop searching.
  */
 ArduinoScanner.prototype.stop = function() {
-  if (searchInterval) {
-    clearInterval(searchInterval);
+  if (this.searchInterval) {
+    clearInterval(this.searchInterval);
     console.log('Arduino scan stopped.');
   } else {
     console.log('Arduino scan was not active.');
