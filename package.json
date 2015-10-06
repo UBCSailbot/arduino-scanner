@@ -1,0 +1,28 @@
+{
+  "name": "arduino-scanner",
+  "version": "0.1.0",
+  "description": "Makes it easy to detect an Arduino connected to any computer.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UBCSailbot/arduino-scanner.git"
+  },
+  "keywords": [
+    "arduino",
+    "serial",
+    "serialport",
+    "scan"
+  ],
+  "author": "UBCSailbot",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/UBCSailbot/arduino-scanner/issues"
+  },
+  "homepage": "https://github.com/UBCSailbot/arduino-scanner#readme",
+  "dependencies": {
+    "serialport": "^1.7.4"
+  }
+}
