@@ -25,9 +25,11 @@ var ArduinoScanner = function() {
    * scan.start(500, true)
    */
   this.search = function() {
+    var self = this;
+
     serialport.list(function(err, ports) {
       if (ports.length === 0) {
-        this.emit('noPortsFound', {
+        self.emit('noPortsFound', {
           message: 'Nothing detected in serial ports. Check connections.'
         });
         return;
@@ -38,12 +40,12 @@ var ArduinoScanner = function() {
           (port.vendorId == '0x2341' && port.productId === '0x0042'); // Arduino.cc
 
         if (matched) {
-          this.emit('arduinoFound', {
+          self.emit('arduinoFound', {
             port: port.comName,
             message: 'Arduino found at port ' + port.comName + '.'
           });
         } else {
-          this.emit('arduinoNotFound', {
+          self.emit('arduinoNotFound', {
             message: 'Arduino not at port ' + port.comName + '.'
           });
         }
@@ -52,6 +54,8 @@ var ArduinoScanner = function() {
     });
   };
 };
+
+util.inherits(ArduinoScanner, EventEmitter);
 
 /**
  * Starts scanning for valid Arduino serial ports.
@@ -62,7 +66,11 @@ ArduinoScanner.prototype.start = function(interval) {
   // If the interval isn't set, default to 500 ms.
   interval = interval || 500;
 
-  this.searchInterval = setInterval(search, interval);
+  var self = this;
+
+  self.searchInterval = setInterval(function() {
+    self.search();
+  }, interval);
 };
 
 /**
@@ -76,7 +84,5 @@ ArduinoScanner.prototype.stop = function() {
     console.log('Arduino scan was not active.');
   }
 };
-
-util.inherits(ArduinoScanner, EventEmitter);
 
 module.exports = ArduinoScanner;
