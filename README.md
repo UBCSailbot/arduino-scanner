@@ -15,6 +15,8 @@ Node 0.12.7 is required until the `serialport` module is updated.
 var ArduinoScanner = require('arduino-scanner');
 var arduinoScanner = new ArduinoScanner();
 
+arduinoScanner.start();
+
 arduinoScanner.on('arduinoFound', function(response) {
   arduinoScanner.stop();
   console.log(response.message);
