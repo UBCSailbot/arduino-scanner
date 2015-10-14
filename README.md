@@ -9,6 +9,8 @@ Node 0.12.7 is required until the `serialport` module is updated.
 
 **Node 4.0 is NOT supported at this time.**
 
+**El Capitan (OS X 10.11) Is NOT supported at this time.**
+
 ### Usage Example
 
 ```node
