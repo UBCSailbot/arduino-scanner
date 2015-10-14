@@ -23,6 +23,6 @@
   },
   "homepage": "https://github.com/UBCSailbot/arduino-scanner#readme",
   "dependencies": {
-    "serialport": "^1.7.4"
+    "serialport": "^2.0.1"
   }
 }
