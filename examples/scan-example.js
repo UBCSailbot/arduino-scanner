@@ -1,5 +1,7 @@
 var ArduinoScanner = require('../'); // Use 'arduino-scanner' in your programs!
-var arduinoScanner = new ArduinoScanner();
+var arduinoScanner = new ArduinoScanner({
+  // board: 'sf-mega-pro'
+});
 
 arduinoScanner.start();
 

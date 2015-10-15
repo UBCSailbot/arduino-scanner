@@ -10,8 +10,20 @@
 var util = require("util");
 var EventEmitter = require("events").EventEmitter;
 var serialport = require('serialport');
+var boards = require('./boards.js');
 
-var ArduinoScanner = function() {
+/**
+ * Constructor
+ *
+ * @param  {object} options - Options for the consumer to pass in.
+ */
+var ArduinoScanner = function(opts) {
+  var opts = opts || {};
+
+  this.options = {
+    board: opts.board // Restricts matching if defined
+  };
+
   EventEmitter.call(this);
 
   /**
@@ -28,16 +40,18 @@ var ArduinoScanner = function() {
     var self = this;
 
     serialport.list(function(err, ports) {
-      if (ports.length === 0) {
+      if (err || ports.length === 0) {
         self.emit('noPortsFound', {
           message: 'Nothing detected in serial ports. Check connections.'
         });
         return;
       }
+
       ports.some(function(port) {
         var matched =
-          (port.vendorId == '0x0403' && port.productId === '0x6001') || // Pro Mega
-          (port.vendorId == '0x2341' && port.productId === '0x0042'); // Arduino.cc
+          (port.productId in boards) &&
+          (!self.options.board ||
+            (boards[port.productId].indexOf(self.options.board) > -1));
 
         if (matched) {
           self.emit('arduinoFound', {
