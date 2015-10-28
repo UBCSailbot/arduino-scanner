@@ -18,9 +18,13 @@ var boards = require('./boards.js');
  * @param  {object} options - Options for the consumer to pass in.
  */
 var ArduinoScanner = function(opts) {
-  var opts = opts || {};
+  var self = this;
 
-  this.options = {
+  EventEmitter.call(self);
+
+  opts = opts || {};
+
+  self.options = {
     debug: opts.debug || false,
     board: opts.board // Restricts matching if defined
   };
@@ -28,8 +32,6 @@ var ArduinoScanner = function(opts) {
   self.debug = self.options.debug ? function (message) {
     console.log('Arduino: ' + message);
   } : function() {};
-
-  EventEmitter.call(this);
 
   /**
    * Searches the serial ports for any device that has a vendor id and product id
@@ -79,7 +81,7 @@ util.inherits(ArduinoScanner, EventEmitter);
 /**
  * Starts scanning for valid Arduino serial ports.
  * It will emit an 'arduinoFound event once a port is found.
- * 
+ *
  * @param interval - time in milliseconds before trying port reads again.
  */
 ArduinoScanner.prototype.start = function(interval) {
