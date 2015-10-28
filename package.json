@@ -1,6 +1,6 @@
 {
   "name": "arduino-scanner",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Makes it easy to detect an Arduino connected to any computer.",
   "main": "index.js",
   "scripts": {

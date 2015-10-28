@@ -32,8 +32,10 @@ Check `boards.js` for valid board names.
 
 ```node
 var arduinoScanner = new ArduinoScanner({
-  board: 'mega' // Restrict search to a specific board type if you'd like!
-                // Note that some boards share productIds
+  board: 'mega', // Restrict search to a specific board type if you'd like!
+                 // Note that some boards share productIds
+                 
+  debug: true    // Print potentially useful debug output.
   });
 ```
 ### Methods

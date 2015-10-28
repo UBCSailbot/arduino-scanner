@@ -21,8 +21,13 @@ var ArduinoScanner = function(opts) {
   var opts = opts || {};
 
   this.options = {
+    debug: opts.debug || false,
     board: opts.board // Restricts matching if defined
   };
+
+  self.debug = self.options.debug ? function (message) {
+    console.log('Arduino: ' + message);
+  } : function() {};
 
   EventEmitter.call(this);
 
@@ -74,6 +79,7 @@ util.inherits(ArduinoScanner, EventEmitter);
 /**
  * Starts scanning for valid Arduino serial ports.
  * It will emit an 'arduinoFound event once a port is found.
+ * 
  * @param interval - time in milliseconds before trying port reads again.
  */
 ArduinoScanner.prototype.start = function(interval) {
@@ -91,11 +97,13 @@ ArduinoScanner.prototype.start = function(interval) {
  * Stop searching.
  */
 ArduinoScanner.prototype.stop = function() {
-  if (this.searchInterval) {
-    clearInterval(this.searchInterval);
-    console.log('Arduino scan stopped.');
+  var self = this;
+
+  if (self.searchInterval) {
+    clearInterval(self.searchInterval);
+    self.debug('Arduino scan stopped.');
   } else {
-    console.log('Arduino scan was not active.');
+    self.debug('Arduino scan was not active.');
   }
 };
 
