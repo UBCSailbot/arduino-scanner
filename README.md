@@ -5,9 +5,7 @@ An NPM module which makes it easy to detect an Arduino connected to any device!
 Get it through NPM by running: `npm install arduino-scanner`
 
 ### Troubleshooting
-Node 0.12.X is required until the `serialport` module is updated.
-
-**Node 4.0 is NOT supported at this time.**
+If your Arduino isn't being detected, you may need to add the productId to the boards.js file. If this happens, please make a pull request to have the boards.js updated so we can improve the module!
 
 ### Usage Example
 
