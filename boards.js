@@ -11,6 +11,7 @@ module.exports = {
   '0x8036': ['imuduino', 'leonardo', 'little-bits'],
   '0x8037': ['imuduino', 'micro'],
   '0x9206': ['sf-pro-micro'],
-  '0x0x9c31' : ['mega']
+  '0x0x9c31' : ['mega'],
+  '0x7523': ['nano']
 
 };
