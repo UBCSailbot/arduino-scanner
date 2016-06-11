@@ -1,6 +1,6 @@
 {
   "name": "arduino-scanner",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Makes it easy to detect an Arduino connected to any computer.",
   "main": "index.js",
   "scripts": {
@@ -23,6 +23,6 @@
   },
   "homepage": "https://github.com/UBCSailbot/arduino-scanner#readme",
   "dependencies": {
-    "serialport": "^2.0.6"
+    "serialport": "^3.1.2"
   }
 }

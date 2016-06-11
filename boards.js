@@ -13,5 +13,4 @@ module.exports = {
   '0x9206': ['sf-pro-micro'],
   '0x0x9c31' : ['mega'],
   '0x7523': ['nano']
-
 };

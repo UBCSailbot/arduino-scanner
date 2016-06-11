@@ -15,7 +15,7 @@ var boards = require('./boards.js');
 /**
  * Constructor
  *
- * @param  {object} options - Options for the consumer to pass in.
+ * @param  {Object} options Options for the consumer to pass in
  */
 var ArduinoScanner = function(opts) {
   var self = this;
@@ -82,7 +82,7 @@ util.inherits(ArduinoScanner, EventEmitter);
  * Starts scanning for valid Arduino serial ports.
  * It will emit an 'arduinoFound event once a port is found.
  *
- * @param interval - time in milliseconds before trying port reads again.
+ * @param  {Number} interval Time in milliseconds before trying port reads again
  */
 ArduinoScanner.prototype.start = function(interval) {
   // If the interval isn't set, default to 500 ms.
