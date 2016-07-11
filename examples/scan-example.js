@@ -1,6 +1,8 @@
 var ArduinoScanner = require('../'); // Use 'arduino-scanner' in your programs!
 var arduinoScanner = new ArduinoScanner({
-  // board: 'sf-mega-pro'
+  // board: 'mega',
+  // serialNumber: 'AL009RD3',
+  // port: '/dev/cu.usbserial-AL009RD3'
 });
 
 arduinoScanner.start();

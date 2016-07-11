@@ -7,8 +7,8 @@
  * @author joshuabaker2
  */
 
-var util = require("util");
-var EventEmitter = require("events").EventEmitter;
+var util = require('util');
+var EventEmitter = require('events').EventEmitter;
 var serialport = require('serialport');
 var boards = require('./boards.js');
 
@@ -26,19 +26,25 @@ var ArduinoScanner = function(opts) {
 
   self.options = {
     debug: opts.debug || false,
-    board: opts.board // Restricts matching if defined
+    // Strict matching for a specific serial port
+    port: opts.port,
+    // Strict matching for a specifc serial number
+    serialNumber: opts.serialNumber,
+    // Restricts matching if defined
+    board: opts.board
   };
 
-  self.debug = self.options.debug ? function (message) {
+  self.debug = self.options.debug ? function(message) {
     console.log('Arduino: ' + message);
   } : function() {};
 
   /**
-   * Searches the serial ports for any device that has a vendor id and product id
-   * that matches the arduino's. It only emits the first Arduino it finds. If you
-   * want it to return multiple Arduinos, take out the 'return matched' within the
-   * ports.some(function(port){}). If you want more information on all the ports
-   * that it is skipping over, pass 'true' as the second parameter to scan.start()
+   * Searches the serial ports for any device that has a vendor id and product
+   * id that matches the arduino's. It only emits the first Arduino it finds. If
+   * you want it to return multiple Arduinos, take out the 'return matched'
+   * within the ports.some(function(port){}). If you want more information on
+   * all the ports that it is skipping over, pass 'true' as the second parameter
+   * to scan.start()
    *
    * i.e.
    * scan.start(500, true)
@@ -55,10 +61,22 @@ var ArduinoScanner = function(opts) {
       }
 
       ports.some(function(port) {
-        var matched =
-          (port.productId in boards) &&
-          (!self.options.board ||
-            (boards[port.productId].indexOf(self.options.board) > -1));
+        var matched;
+
+        matched = port.productId in boards;
+
+        if (self.options.port) {
+          matched = matched && port.comName === self.options.port;
+        }
+
+        if (self.options.serialNumber) {
+          matched = matched && port.serialNumber === self.options.serialNumber;
+        }
+
+        if (self.options.board) {
+          matched = matched &&
+            boards[port.productId].indexOf(self.options.board) !== -1;
+        }
 
         if (matched) {
           self.emit('arduinoFound', {
