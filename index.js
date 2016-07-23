@@ -9,7 +9,7 @@
 
 var util = require('util');
 var EventEmitter = require('events').EventEmitter;
-var serialport = require('serialport');
+var SerialPort = require('serialport');
 var boards = require('./boards.js');
 
 /**
@@ -52,7 +52,7 @@ var ArduinoScanner = function(opts) {
   this.search = function() {
     var self = this;
 
-    serialport.list(function(err, ports) {
+    SerialPort.list(function(err, ports) {
       if (err || ports.length === 0) {
         self.emit('noPortsFound', {
           message: 'Nothing detected in serial ports. Check connections.'
