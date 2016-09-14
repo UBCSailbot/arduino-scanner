@@ -76,7 +76,7 @@ var ArduinoScanner = function(opts) {
           if (self.options.board) {
            matched = matched && boards[port.productId].indexOf(self.options.board) !== -1;
           }
-		}
+        }
 
         if (matched) {
           self.emit('arduinoFound', {
